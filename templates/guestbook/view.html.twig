@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %} 
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 ml-md-auto">
+      <div class="card bg-light mb-3 mt-5" style="width: 800px">
+        <div class="card-body">
+          <div class="card-header mb-3">View Guestbook</div>
+            <table class="table">
+                <tr>
+                    <td>Type:</td><td>{{ guestbook.type }}</td>
+                </tr>
+                <tr>
+                    <td>Created By:</td><td>{{ guestbook.user.email }}</td>
+                </tr>
+                <tr>
+                    <td>Text:</td><td>{{ guestbook.text }}</td>
+                </tr>
+                <tr>
+                    <td>Image:</td>
+                    <td>
+                        {% if guestbook.image %}
+                        <img src="{{ asset('uploads/images/' ~ guestbook.image) }}" width="50" height="50" />
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status:</td><td>{{ guestbook.status | upper }}</td>
+                </tr>
+                <tr>
+                    <td>Created At:</td><td>{{ guestbook.createdAt | date('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <td colspan=2><a href="/guestbook/list"><button type="button" class="btn btn-primary">Back To List</button></a></td>
+                <td>
+            </table>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Guestbook : List {% endblock %}
+
+{% block body %}
+
+
+<div class="col-md-12">
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h1>Admin List Page</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type</th>
+                <th scope="col">Text</th>
+                <th scope="col">Image</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created At</th>
+                <th scope="col">User</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in guestbooks  %}
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.type }}</td>
+                <td>{{ row.text }}</td>
+                <td>
+                    {% if row.image %}
+                    <img src="{{ asset('uploads/images/' ~ row.image) }}" width="50" height="50" />
+                    {% endif %}
+                </td>
+                <td>{{ row.status | upper }}</td>
+                <td>{{ row.createdAt | date('d-m-Y H:i') }}</td>
+                <td>{{ row.user.email }}</td>
+                <td>
+                    <a href="/guestbook/view/{{row.id}}"><button type="button" class="btn btn-primary">View</button></a>
+                    <a href="/guestbook/edit/{{row.id}}"><button type="button" class="btn btn-primary">Edit</button></a>
+                    <a href="/guestbook/approve/{{row.id}}"><button type="button" class="btn btn-success">Approve</button></a>
+                    <a href="/guestbook/delete/{{row.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

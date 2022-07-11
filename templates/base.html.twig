@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light"
+      style="height: 70px;"
+    >
+        <a class="navbar-brand pl-2" href="{{ path('homepage') }}">Guestbook</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+        <ul class="nav navbar-nav navbar-right">    
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a class="nav-link" href="{{ path('app_guestbook_list') }}">List</a></li>
+            <li><a class="nav-link" href="{{ path('app_guestbook_add') }}">Add</a></li>
+            <li><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
+        {% elseif is_granted('ROLE_USER') %}
+            <li><a class="nav-link" href="{{ path('app_guestbook_add') }}">Add</a></li>
+            <li><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
+        {% else %}
+            <li><a class="nav-link" href="{{ path('app_register') }}">Register</a></li>
+            <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
+        {% endif %}
+        </ul>
+    </nav>
+    {% block body %}{% endblock %}
+  </body>
+</html>
